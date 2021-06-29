@@ -2,6 +2,8 @@ package com.roger.cursomc.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,15 +18,17 @@ public class Categoria implements Serializable {
     @Column
     private String nome;
 
-    public Categoria() {
+    @ManyToMany(mappedBy = "categorias")
+    private List<Produto> produtos = new ArrayList<>();
 
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
-    public Categoria(Integer id, String nome) {
-        super();
-        this.id = id;
-        this.nome = nome;
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
     }
+
 
     public Integer getId() {
         return id;
@@ -53,5 +57,15 @@ public class Categoria implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public Categoria() {
+
+    }
+
+    public Categoria(Integer id, String nome) {
+        super();
+        this.id = id;
+        this.nome = nome;
     }
 }
