@@ -76,7 +76,5 @@ public class CursosMcApplication implements CommandLineRunner {
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
         clienteRepository.saveAll(Arrays.asList(cli1));
         enderecoRepository.saveAll(Arrays.asList(end1, end2));
-
-
     }
 }
