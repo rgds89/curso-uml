@@ -6,7 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class Pagamento implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -19,7 +20,6 @@ public class Pagamento implements Serializable {
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
-    @Column
     private Pedido pedido;
 
     public Long getId() {
