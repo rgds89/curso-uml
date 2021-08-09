@@ -20,7 +20,7 @@ public class Categoria implements Serializable {
     @Column
     private String nome;
 
-    @JsonManagedReference
+    
     @ManyToMany(mappedBy = "categorias")
     private List<Produto> produtos = new ArrayList<>();
 

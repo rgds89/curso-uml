@@ -25,18 +25,17 @@ public class Produto implements Serializable {
     @Column
     private String nome;
 
-    @JsonBackReference
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "PRODUTO_CATEGORIA",
             joinColumns = @JoinColumn(name ="id_produto"),
             inverseJoinColumns= @JoinColumn(name = "id_categoria")
     )
+    private List<Categoria> categorias = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy="id.produto")
     private Set<ItemPedido> itens = new HashSet<>();
-
-    private List<Categoria> categorias = new ArrayList<>();
 
     public Integer getId_produto() {
         return id_produto;
