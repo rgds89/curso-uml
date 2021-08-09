@@ -1,15 +1,28 @@
 package com.roger.cursomc.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
+
+    @Column
     private Date instante;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy="pedido")
+    @Column
     private Pagamento pagamento;
+
+    @Column
     private Cliente cliente;
+
+    @Column
     private Endereco enderecoEntrega;
 
     public Long getId() {

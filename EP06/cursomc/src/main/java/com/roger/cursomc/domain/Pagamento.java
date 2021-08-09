@@ -2,13 +2,24 @@ package com.roger.cursomc.domain;
 
 import com.roger.cursomc.domain.enums.EstadoPagamento;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
 public class Pagamento implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @Column
     private Long id;
+
+    @Column
     private EstadoPagamento estado;
+
+    @OneToOne
+    @JoinColumn(name = "pedido_id")
+    @MapsId
+    @Column
     private Pedido pedido;
 
     public Long getId() {
