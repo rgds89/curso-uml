@@ -1,6 +1,8 @@
 package com.roger.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,13 +19,14 @@ public class Pedido implements Serializable {
     private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
     private Date instante;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL, mappedBy="pedido")
-    @Column
     private Pagamento pagamento;
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
