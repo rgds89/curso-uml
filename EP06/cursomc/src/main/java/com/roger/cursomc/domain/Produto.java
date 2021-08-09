@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Produto implements Serializable {
@@ -28,6 +30,10 @@ public class Produto implements Serializable {
             joinColumns = @JoinColumn(name ="id_produto"),
             inverseJoinColumns= @JoinColumn(name = "id_categoria")
     )
+
+    @OneToMany(mappedBy="id.produto")
+    private Set<ItemPedido> itens = new HashSet<>();
+
     private List<Categoria> categorias = new ArrayList<>();
 
     public Integer getId_produto() {
@@ -62,26 +68,12 @@ public class Produto implements Serializable {
         this.categorias = categorias;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Produto produto = (Produto) o;
-
-        if (id_produto != null ? !id_produto.equals(produto.id_produto) : produto.id_produto != null) return false;
-        if (preco != null ? !preco.equals(produto.preco) : produto.preco != null) return false;
-        if (nome != null ? !nome.equals(produto.nome) : produto.nome != null) return false;
-        return categorias != null ? categorias.equals(produto.categorias) : produto.categorias == null;
+    public Set<ItemPedido> getItens() {
+        return itens;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id_produto != null ? id_produto.hashCode() : 0;
-        result = 31 * result + (preco != null ? preco.hashCode() : 0);
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
-        result = 31 * result + (categorias != null ? categorias.hashCode() : 0);
-        return result;
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 
     public Produto(){}
@@ -91,4 +83,13 @@ public class Produto implements Serializable {
         this.preco = preco;
         this.nome = nome;
     }
+
+    public List<Pedido> getPedidos(){
+        List<Pedido> lista = new ArrayList<>();
+        for(ItemPedido x : itens){
+            lista.add(x.getPedido());
+        }
+        return lista;
+    }
+
 }

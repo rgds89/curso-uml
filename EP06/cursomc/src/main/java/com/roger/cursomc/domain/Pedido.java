@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -29,6 +31,9 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_endereco")
     private Endereco enderecoEntrega;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemPedido> itens = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -93,5 +98,13 @@ public class Pedido implements Serializable {
     @Override
     public int hashCode() {
         return id.hashCode();
+    }
+
+    public Set<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(Set<ItemPedido> itens) {
+        this.itens = itens;
     }
 }
